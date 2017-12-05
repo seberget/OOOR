@@ -9,6 +9,8 @@ package Kernel::System::PostMaster::Filter::OOOR;
 use strict;
 use warnings;
 
+use Kernel::System::ObjectManager;
+
 sub new {
   my ( $Type, %Param ) = @_;
 
@@ -17,11 +19,6 @@ sub new {
   bless( $Self, $Type );
 
   $Self->{Debug} = $Param{Debug} || 0;
-
-  # get needed objects
-  for (qw(ConfigObject LogObject MainObject TicketObject)) {
-    $Self->{$_} = $Param{$_} || die "Got no $_!";
-  }
 
   return $Self;
 }
