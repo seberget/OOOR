@@ -11,6 +11,11 @@ use warnings;
 
 use Kernel::System::ObjectManager;
 
+our @ObjectDependencies = (
+  'Kernel::System::Log',
+);
+
+
 sub new {
   my ( $Type, %Param ) = @_;
 
@@ -19,6 +24,11 @@ sub new {
   bless( $Self, $Type );
 
   $Self->{Debug} = $Param{Debug} || 0;
+
+  $Self->{ParserObject} = $Param{ParserObject} || die "Got no ParserObject";
+
+  # Get communication log object.
+  $Self->{CommunicationLogObject} = $Param{CommunicationLogObject} || die "Got no CommunicationLogObject!";
 
   return $Self;
 }
@@ -29,7 +39,7 @@ sub Run {
   # check needed stuff
   for (qw(GetParam)) {
     if ( !$Param{$_} ) {
-      $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+      $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "Need $_!");
       return;
     }
   }
@@ -62,7 +72,7 @@ sub Run {
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-replied' ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
     $Self->{TicketObject}->HistoryAdd(
-      Name         => 'auto-submitted was set to \'auto-replied\', skipping state update',
+      Name         => 'Auto-Submitted was set to \'auto-replied\', skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
       CreateUserID => 1,
@@ -72,7 +82,7 @@ sub Run {
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-generated' ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
     $Self->{TicketObject}->HistoryAdd(
-      Name         => 'auto-submitted was set to \'auto-generated\', skipping state update',
+      Name         => 'Auto-Submitted was set to \'auto-generated\', skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
       CreateUserID => 1,
