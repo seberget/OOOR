@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ConfigItem Name="PostMaster::PreFilterModule###111-OutOfOfficeReply" Required="0" Valid="1">
-    <Description Translatable="1">
-        'Out-Of-Office-Replies' will not change state of tickets.
-    </Description>
-    <Group>Ticket</Group>
-    <SubGroup>Core::PostMaster</SubGroup>
-    <Setting>
-        <Hash>
-            <Item Key="Module">Kernel::System::PostMaster::Filter::OOOR</Item>
-        </Hash>
-    </Setting>
-</ConfigItem>
+<otrs_config version="1.0" init="Config">
+  <ConfigItem Name="PostMaster::PreFilterModule###111-OutOfOfficeReply" Required="0" Valid="1">
+      <Description Translatable="1">
+          'Out-Of-Office-Replies' will not change state of tickets.
+      </Description>
+      <Group>Ticket</Group>
+      <SubGroup>Core::PostMaster</SubGroup>
+      <Setting>
+          <Hash>
+              <Item Key="Module">Kernel::System::PostMaster::Filter::OOOR</Item>
+          </Hash>
+      </Setting>
+  </ConfigItem>
+</otrs_config>
