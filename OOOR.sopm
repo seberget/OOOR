@@ -24,7 +24,7 @@ _X-Autoreply_, _X-Autorespond_ and _Auto-Submitted_. Case is important.
     <IntroInstall Type="post" Lang="en" Title="Thank you!">Thank you for installing the Out-Of-Office-Reply module</IntroInstall>
     
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/OOOR.xml"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/OOOR.xml"></File>
         <File Permission="644" Location="Kernel/System/PostMaster/Filter/OOOR.pm"></File>
     </Filelist>
 </otrs_package>
