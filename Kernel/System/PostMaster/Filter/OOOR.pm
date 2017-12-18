@@ -44,9 +44,11 @@ sub Run {
     }
   }
 
+  my %Ticket;
+
   if ($Param{TicketID}) {
     $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "We have lift-off!");
-    my %Ticket = $Self->{TicketObject}->TicketGet(
+    %Ticket = $Self->{TicketObject}->TicketGet(
       TicketID => $Param{TicketID},
       UserID   => 1
     );
