@@ -52,7 +52,7 @@ sub Run {
     $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "We have lift-off!");
     $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketID: $Param{TicketID}");
 
-    $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket')
+    $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
     %Ticket = $TicketObject->TicketGet(
       TicketID => $Param{TicketID},
