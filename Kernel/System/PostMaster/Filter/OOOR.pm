@@ -13,6 +13,7 @@ use Kernel::System::ObjectManager;
 
 our @ObjectDependencies = (
   'Kernel::System::Log',
+  'Kernel::System::Ticket',
 );
 
 
@@ -45,10 +46,15 @@ sub Run {
   }
 
   my %Ticket;
+  my $TicketObject;
 
   if ($Param{TicketID}) {
     $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "We have lift-off!");
-    %Ticket = $Self->{TicketObject}->TicketGet(
+    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketID: $Param{TicketID}");
+
+    $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket')
+
+    %Ticket = $TicketObject->TicketGet(
       TicketID => $Param{TicketID},
       UserID   => 1
     );
@@ -60,7 +66,7 @@ sub Run {
 
   if ($Param{GetParam}->{'X-Autoreply'}) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
-    $Self->{TicketObject}->HistoryAdd(
+    $TicketObject->HistoryAdd(
       Name         => 'X-Autoreply was set, skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
@@ -70,7 +76,7 @@ sub Run {
   }
   elsif ( $Param{GetParam}->{'X-Autorespond'} ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
-    $Self->{TicketObject}->HistoryAdd(
+    $TicketObject->HistoryAdd(
       Name         => 'X-Autorespond was set, skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
@@ -80,7 +86,7 @@ sub Run {
   }
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-replied' ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
-    $Self->{TicketObject}->HistoryAdd(
+    $TicketObject->HistoryAdd(
       Name         => 'Auto-Submitted was set to \'auto-replied\', skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
@@ -90,7 +96,7 @@ sub Run {
   }
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-generated' ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
-    $Self->{TicketObject}->HistoryAdd(
+    $TicketObject->HistoryAdd(
       Name         => 'Auto-Submitted was set to \'auto-generated\', skipping state update',
       HistoryType  => 'FollowUp',
       TicketID     => $Param{TicketID},
