@@ -44,18 +44,17 @@ sub Run {
     }
   }
 
-#  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "    TicketID: $Param{TicketID}");
-#  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketObject: $Self->{TicketObject}");
-  
-
-  while( my( $key, $value ) = each $Self ){
-    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "$key: $value");
+  if ($Param{TicketID}) {
+    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "We have lift-off!");
+    my %Ticket = $Self->{TicketObject}->TicketGet(
+      TicketID => $Param{TicketID},
+      UserID   => 1
+    );
   }
-
-  my %Ticket = $Self->{TicketObject}->TicketGet(
-    TicketID => $Param{TicketID},
-    UserID   => 1
-  );
+  elsif {
+    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "New ticket, skipping");
+    return 1;
+  }
 
   if ($Param{GetParam}->{'X-Autoreply'}) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
