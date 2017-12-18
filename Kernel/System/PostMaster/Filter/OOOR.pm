@@ -44,9 +44,13 @@ sub Run {
     }
   }
 
-  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "    TicketID: $Param{TicketID}");
-  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketObject: $Self->{TicketObject}");
-  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "        Self: $Self");
+#  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "    TicketID: $Param{TicketID}");
+#  $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketObject: $Self->{TicketObject}");
+  
+
+  while( my( $key, $value ) = each $Self ){
+    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "$key: $value");
+  }
 
   my %Ticket = $Self->{TicketObject}->TicketGet(
     TicketID => $Param{TicketID},
