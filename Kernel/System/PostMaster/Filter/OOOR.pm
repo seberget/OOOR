@@ -49,9 +49,6 @@ sub Run {
   my $TicketObject;
 
   if ($Param{TicketID}) {
-    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "We have lift-off!");
-    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "TicketID: $Param{TicketID}");
-
     $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
     %Ticket = $TicketObject->TicketGet(
@@ -60,12 +57,12 @@ sub Run {
     );
   }
   else {
-    $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "New ticket, skipping");
     return 1;
   }
 
   if ($Param{GetParam}->{'X-Autoreply'}) {
-    $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    #$Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
     $TicketObject->HistoryAdd(
       Name         => 'X-Autoreply was set, skipping state update',
       HistoryType  => 'FollowUp',
@@ -75,7 +72,8 @@ sub Run {
     return 1;
   }
   elsif ( $Param{GetParam}->{'X-Autorespond'} ) {
-    $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    #$Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
     $TicketObject->HistoryAdd(
       Name         => 'X-Autorespond was set, skipping state update',
       HistoryType  => 'FollowUp',
@@ -85,7 +83,8 @@ sub Run {
     return 1;
   }
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-replied' ) {
-    $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    #$Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
     $TicketObject->HistoryAdd(
       Name         => 'Auto-Submitted was set to \'auto-replied\', skipping state update',
       HistoryType  => 'FollowUp',
@@ -95,7 +94,8 @@ sub Run {
     return 1;
   }
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-generated' ) {
-    $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    #$Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Ticket{State};
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
     $TicketObject->HistoryAdd(
       Name         => 'Auto-Submitted was set to \'auto-generated\', skipping state update',
       HistoryType  => 'FollowUp',
