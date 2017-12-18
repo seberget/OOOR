@@ -51,7 +51,7 @@ sub Run {
       UserID   => 1
     );
   }
-  elsif {
+  else {
     $Kernel::OM->Get('Kernel::System::Log')->Log(Priority => 'error', Message  => "New ticket, skipping");
     return 1;
   }
