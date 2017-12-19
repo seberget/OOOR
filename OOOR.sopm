@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>Out-Of-Office-Reply</Name>
-    <Version>4.0.0</Version>
+    <Version>6.0.0</Version>
     <Framework>6.0.x</Framework>
     <Vendor>Stein Erik Berget</Vendor>
     <URL>https://github.com/seberget/OOOR/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <ChangeLog Version="0.0.1" Date="2014-10-01 21:42:52">Initial release.</ChangeLog>
     <ChangeLog Version="0.0.2" Date="2014-10-02 13:13:13">First public release.</ChangeLog>
-    <ChangeLog Version="4.0.0" Date="2017-12-15 09:00:00">First public release for the 6.0.x OTRS framework</ChangeLog>
+    <ChangeLog Version="6.0.0" Date="2017-12-15 09:00:00">First public release for the 6.0.x OTRS framework</ChangeLog>
     <Description Lang="en">
 Filters out e-mail responses to ticket updates that are out-of-office-replies. This is done by analyzing e-mail headers. All e-mails are received but they will not change the state of the ticket. An entry is created in _history_ to say which action was made.
 
