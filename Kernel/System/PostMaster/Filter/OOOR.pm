@@ -94,6 +94,16 @@ sub Run {
     );
     return 1;
   }
+  elsif ( $Param{GetParam}->{'Return-Path'} eq '<>' ) {
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
+    $TicketObject->HistoryAdd(
+      Name         => 'Return-Path was set to \'<>\', skipping state update',
+      HistoryType  => 'FollowUp',
+      TicketID     => $Param{TicketID},
+      CreateUserID => 1,
+    );
+    return 1;
+  }
   return 1;
 }
 
