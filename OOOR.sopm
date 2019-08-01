@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="utf-8" ?>
+<?xml version="1.10" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>Out-Of-Office-Reply</Name>
     <Version>6.0.0</Version>
