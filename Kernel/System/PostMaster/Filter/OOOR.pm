@@ -74,6 +74,16 @@ sub Run {
     );
     return 1;
   }
+  elsif ( $Param{GetParam}->{'X-Auto-Response-Suppress'} ) {
+    $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
+    $TicketObject->HistoryAdd(
+      Name         => 'X-Autorespond was set, skipping state update',
+      HistoryType  => 'FollowUp',
+      TicketID     => $Param{TicketID},
+      CreateUserID => 1,
+    );
+    return 1;
+  }
   elsif ( $Param{GetParam}->{'Auto-Submitted'} eq 'auto-replied' ) {
     $Param{GetParam}->{'X-OTRS-FollowUp-State-Keep'} = 'Yes';
     $TicketObject->HistoryAdd(
